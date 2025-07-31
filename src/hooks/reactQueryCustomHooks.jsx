@@ -13,7 +13,7 @@ export const useFetchTasks = () => {
   return { isLoading, data, isError };
 };
 
-export const useCreatePost = (setText) => {
+export const useCreatePost = (setText, setBody) => {
   const queryClient = useQueryClient();
 
   const { mutate: createPost, isPending } = useMutation({
@@ -23,6 +23,7 @@ export const useCreatePost = (setText) => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       toast.success("Post Added");
       setText("");
+      setBody("");
     },
     onError: (error) => {
       console.log(error);
