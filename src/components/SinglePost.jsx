@@ -1,21 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
-import customFetch from "../axios/utils";
-import { toast } from "react-toastify";
+import { useDeletePost } from "../hooks/reactQueryCustomHooks";
 
 const SinglePost = ({ id, title, body }) => {
-  const queryClient = useQueryClient();
-  const { mutate: deletePost } = useMutation({
-    mutationFn: (postId) => customFetch(`/posts/${postId}`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-      toast.success("Post Deleted Successfully");
-    },
-    onError: () => {
-      toast.error("Something went wrong");
-    },
-  });
-
+  const { deletePost } = useDeletePost();
   const basicStyles = { textTransform: "capitalize", textAlign: "center" };
 
   return (
