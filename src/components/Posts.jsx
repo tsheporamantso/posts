@@ -24,7 +24,7 @@ const Posts = () => {
 
   return (
     <div>
-      {data?.map((post) => {
+      {data.map((post) => {
         return <SinglePost {...post} key={nanoid()} />;
       })}
     </div>
