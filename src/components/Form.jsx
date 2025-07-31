@@ -1,26 +1,9 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import customFetch from "../axios/utils";
-import { toast } from "react-toastify";
+import { useCreatePost } from "../hooks/reactQueryCustomHooks";
 
 const Form = () => {
   const [text, setText] = useState("");
-
-  const queryClient = useQueryClient();
-
-  const { mutate: createPost, isPending } = useMutation({
-    mutationFn: ({ postTitle, postBody }) =>
-      customFetch("/posts", { title: postTitle, body: postBody }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-      toast.success("Post Added");
-      setText("");
-    },
-    onError: (error) => {
-      console.log(error);
-      toast.error(error.message);
-    },
-  });
+  const { createPost, isPending } = useCreatePost(setText);
 
   const handleSubmit = (e) => {
     e.preventDefault();
