@@ -32,3 +32,18 @@ export const useCreatePost = (setText, setBody) => {
   });
   return { createPost, isPending };
 };
+
+export const useDeletePost = () => {
+  const queryClient = useQueryClient();
+  const { mutate: deletePost } = useMutation({
+    mutationFn: (postId) => customFetch(`/posts/${postId}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      toast.success("Post Deleted Successfully");
+    },
+    onError: () => {
+      toast.error("Something went wrong");
+    },
+  });
+  return { deletePost };
+};
