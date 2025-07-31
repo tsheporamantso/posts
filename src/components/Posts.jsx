@@ -10,7 +10,7 @@ const Posts = () => {
     queryKey: ["posts"],
     queryFn: async () => {
       const { data } = await customFetch("/posts");
-      return data;
+      return data.slice(0, 5);
     },
   });
 
