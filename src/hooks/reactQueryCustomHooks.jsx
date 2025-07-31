@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import customFetch from "../axios/utils";
+import { toast } from "react-toastify";
 
 export const useFetchTasks = () => {
   const { data, isError, isLoading } = useQuery({
@@ -10,4 +11,23 @@ export const useFetchTasks = () => {
     },
   });
   return { isLoading, data, isError };
+};
+
+export const useCreatePost = (setText) => {
+  const queryClient = useQueryClient();
+
+  const { mutate: createPost, isPending } = useMutation({
+    mutationFn: ({ postTitle, postBody }) =>
+      customFetch("/posts", { title: postTitle, body: postBody }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      toast.success("Post Added");
+      setText("");
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error(error.message);
+    },
+  });
+  return { createPost, isPending };
 };
