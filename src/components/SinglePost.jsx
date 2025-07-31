@@ -7,11 +7,13 @@ const SinglePost = ({ title, body }) => {
     gap: "1rem",
   };
 
+  const basicStyles = { textTransform: "capitalize", textAlign: "center" };
+
   return (
     <div style={basicStyle}>
       <article>
-        <h4>{title}</h4>
-        <p>{body}</p>
+        <h3 style={basicStyles}>{title}</h3>
+        <p style={basicStyles}>{body}</p>
       </article>
     </div>
   );
