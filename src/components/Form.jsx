@@ -15,7 +15,15 @@ const Form = () => {
   return (
     <>
       <h2 style={{ textAlign: "center" }}>Create Post</h2>
-      <form onSubmit={handleSubmit} style={{ display: "flex", gap: "1rem" }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          gap: "1rem",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <label htmlFor="title">Title:</label>
         <input
           type="text"
