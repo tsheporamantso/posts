@@ -6,7 +6,7 @@ export const useFetchTasks = () => {
   const { data, isError, isLoading } = useQuery({
     queryKey: ["posts"],
     queryFn: async () => {
-      const { data } = await customFetch("/posts");
+      const { data } = await customFetch.get("/posts");
       return data.slice(0, 5);
     },
   });
@@ -18,7 +18,7 @@ export const useCreatePost = (setText, setBody) => {
 
   const { mutate: createPost, isPending } = useMutation({
     mutationFn: ({ postTitle, postBody }) =>
-      customFetch("/posts", { title: postTitle, body: postBody }),
+      customFetch.post("/posts", { title: postTitle, body: postBody }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       toast.success("Post Added");
@@ -36,7 +36,7 @@ export const useCreatePost = (setText, setBody) => {
 export const useDeletePost = () => {
   const queryClient = useQueryClient();
   const { mutate: deletePost } = useMutation({
-    mutationFn: (postId) => customFetch(`/posts/${postId}`),
+    mutationFn: (postId) => customFetch.delete(`/posts/${postId}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       toast.success("Post Deleted Successfully");
